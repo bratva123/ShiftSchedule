@@ -1,0 +1,188 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+<div class="alert alert-danger" id="texterror">
+    <strong>{{ error }}</strong>
+    <button type="button" class="close" data-hide="alert" (click)="closeError()">&times;</button>
+</div>
+
+<div class="alert alert-success" id="msg">
+    <strong>{{ msg }}</strong>
+    <button type="button" class="close" data-hide="alert" (click)="closeMsg()">&times;</button>
+</div>
+
+<style>
+         table, th, td {
+            border: 1px solid black;
+         }
+</style>
+<div class="col">
+      <legend class="col-form-label col-sm-2 pt-0">Choose What Operation You Want To Perform</legend>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="opeartion"  id="create" value="1"  (change)="chooseOperation()">
+          <label class="form-check-label" for="create">
+            Add Shift Detail Detail
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="opeartion"  id="read" value="2" (change)="chooseOperation()">
+          <label class="form-check-label" for="read">
+            Get Shift Detail
+          </label>
+        </div>
+        <div class="form-check disabled">
+          <input class="form-check-input" type="radio" name="opeartion"   id="update" value="3" (change)="chooseOperation()">
+          <label class="form-check-label" for="update">
+            Update Shift Detail
+          </label>
+        </div>
+        <div class="form-check disabled">
+          <input class="form-check-input" type="radio" name="opeartion"   id="delete" value="4" (change)="chooseOperation()"(change)="chooseOperation()">
+          <label class="form-check-label" for="delete">
+            Delete SHift Detail
+          </label>
+        </div>
+      </div>
+</div>
+
+<div *ngIf="add">
+    <div class="container">
+        Go To This Link <a href="http://d7de934fa0ab.ngrok.io/shift">Add Shift Schedule</a>
+    </div>
+
+</div>
+
+<div *ngIf="get">
+    <div class="container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="getOp1" value="option1" (change)="getOperation()">
+              <label class="form-check-label" for="getOp1">Get By Shift and  By date</label>
+
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="getOp2" value="option2" (change)="getOperation()">
+              <label class="form-check-label" for="getOp2">Get By Card Number and Date</label>
+
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="getOp4" value="option2" (change)="getOperation()">
+              <label class="form-check-label" for="getOp4">Get By date</label>
+            </div>
+    </div>
+  <br><br>
+    <div class="container" *ngIf="getByShiftDate">
+            <label for="shift">Shift</label>
+            <select class="form-control" [(ngModel)]="shift.shiftType">
+                <option value=""></option>
+                <option value="First">First</option>
+                <option value="Second">Second</option>
+                <option value="Third">Third</option>
+            </select>
+            <br>
+            <input type="date" class="form-control"  [(ngModel)]="shift.date">
+            <br>
+            <button type="button" class="btn btn-secondary" (click)="getByShiftAndDate()">Get Employee Detail</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-danger" (click)="clear()">Clear</button>
+    </div>
+
+    <div class="container" *ngIf="getByCardDate">
+           <input type="text" class="form-control" [(ngModel)]="shift.cardNum" placeholder="Card Number">
+            <br>
+            <input type="date" class="form-control"  [(ngModel)]="shift.date">
+            <br>
+            <input type="text" class="form-control"  [(ngModel)]="shift.shiftType" disabled>
+            <br>
+            <button type="button" class="btn btn-secondary" (click)="getByCardAndDate()">Get Shift Detail</button> &nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-danger" (click)="clear()">Clear</button>
+
+    </div>
+
+    <div class="container" *ngIf="getByDate">
+            <input type="date" class="form-control" [(ngModel)]="shift.date">
+            <br>
+            <button type="button" class="btn btn-secondary" (click)="getByOptDate()">Get Shift Detail Number</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-danger" (click)="clear()">Clear</button>
+    </div>
+</div>
+
+<div *ngIf="upd">
+      <div class="container">
+           <div class="container" >
+             <label>Card Number</label>
+             <input type="text" class="form-control" [(ngModel)]="shift.cardNum" placeholder="Card Number" >
+            <br>
+            <input type="date" class="form-control" [(ngModel)]="shift.date"  (change)="getShift()">
+            <br>
+            <input type="text" class="form-control" [(ngModel)]="shift.shiftType" placeholder="Current Shift" disabled>
+            <br>
+             <label for="shift1">New Shift</label>
+            <select class="form-control" #shift1>
+                <option></option>
+                <option value="First">First</option>
+                <option value="Second">Second</option>
+                <option value="Third">Third</option>
+            </select>
+            <br>
+            <button type="button" class="btn btn-secondary" (click)="updateShiftDetail(shift1)">Update New Shift Detail</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-danger" (click)="clear()">Clear</button>
+           </div>
+      </div>
+</div>
+
+<div *ngIf="del">
+    <div class="container">
+           <div class="container" >
+             <label>Card Number</label>
+             <input type="text" class="form-control" [(ngModel)]="shift.cardNum" placeholder="Card Number" >
+             <br>
+             <input type="date" class="form-control" [(ngModel)]="shift.date"  (change)="getShift()">
+             <br>
+             <input type="text" class="form-control" [(ngModel)]="shift.shiftType" placeholder="Shift" disabled>
+             <br>
+             <label><input type="checkbox" #sure> &nbsp;&nbsp;&nbsp;&nbsp;Are you Sure to Delete this information ?</label>
+             <br>
+             <button type="button" class="btn btn-danger" (click)="deleteShftDetail(sure)">Delete Shift Detail</button> &nbsp;&nbsp;&nbsp;&nbsp;
+             <button type="button" class="btn btn-danger" (click)="clear()">Clear</button>
+           </div>
+      </div>
+</div>
+
+
+<div id="result" class="table-responsive container">
+  <table class="table-border table-hover table-info scrollable">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Sr. No</th>
+      <th scope="col">card number</th>
+      <th scope="col">Employee</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let card of result">
+      <th scope="row">1</th>
+      <td>{{ card }}</td>
+      <td>{{ dict[card] }}</td>
+    </tr>
+  </tbody>
+  </table>
+
+  <button class="btn btn-small" (click)="closeResult()">close</button>
+</div>
+
+
+<div id="result2" class="table-responsive container">
+  <table class="table-border table-hover table-info scrollable">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Card Number</th>
+      <th scope="col">Employee Name</th>
+      <th scope="col">Shift Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let res of result2">
+      <th scope="row">{{ res[0] }}</th>
+      <td>{{ res[1] }}</td>
+      <td>{{ res[2] }}</td>
+    </tr>
+  </tbody>
+  </table>
+
+  <button class="btn btn-small" (click)="closeResult2()">close</button>
+</div>

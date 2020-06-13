@@ -1,0 +1,30 @@
+#texterror {
+display:none;
+
+}
+
+#msg {
+display:none;
+}
+
+#getOp3{
+  margin-left:50px;
+}
+#getOp2{
+  margin-left:50px;
+}
+#getOp4{
+  margin-left:50px;
+}
+
+
+#result{
+  display:none;
+  paddinf:10px;
+  margin-top: 20px
+}
+#result2{
+  display:none;
+  paddinf:10px;
+  margin-top: 20px
+}

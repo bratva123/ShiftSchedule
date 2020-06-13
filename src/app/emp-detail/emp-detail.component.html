@@ -1,0 +1,18 @@
+<div class="alert alert-warning alert-dismissible" id="texterror">
+    <strong>{{ error }}</strong>
+    <button type="button" class="close" data-hide="alert" (click)="closealert()">&times;</button>
+</div>
+<table>
+    <thead>
+      <td>Name</td>
+      <td>Card Number</td>
+      <td>Shift Type</td>
+    </thead>
+
+    <tbody >
+      <td><input type="text" name="" placeholder="Name Of Employee" [(ngModel)]="emp.EmpName"></td>
+      <td><input type="number" name="" placeholder="Card Number" [(ngModel)]="emp.CardNum" ></td>
+      <td><input type="button" value="Save"  (click)="submit()" ></td>
+
+    </tbody>
+</table>

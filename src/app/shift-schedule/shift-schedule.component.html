@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js">-->
+
+<label>Select month from below Option For which You want to make Shift Sheet</label> &nbsp;&nbsp;&nbsp;&nbsp;
+<select #selectedMonth name="" #month (change)="makeShiftSchedule(selectedMonth)" >
+  <option *ngFor="let month of months" value="{{ month }}"> {{ month }}</option>
+</select>
+<br><br>
+<table class="table table-bordered table-dark table-hover">
+  <thead>
+    <tr>
+      <th style="width: auto;" scope="col">{{ year }} , {{ currentMonth }}</th>
+      <th style="width: auto;" scope="col" *ngFor="let emp of empList"><output>{{ emp[0] }} - {{ emp[1] }}</output></th>
+    </tr>
+  </thead>
+  <tbody id="tdate">
+
+  </tbody>
+</table>
+
+
+<div class="" role="status" id="load">
+  <span class="sr-only">Loading...</span>
+</div>
+
+<input *ngIf="flag" type="button" value="Final Submit" (click)="finalSubmitData()">
+
+

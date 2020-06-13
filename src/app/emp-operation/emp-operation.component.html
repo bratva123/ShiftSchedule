@@ -1,0 +1,152 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+<div class="alert alert-danger" id="texterror">
+    <strong>{{ error }}</strong>
+    <button type="button" class="close" data-hide="alert" (click)="closeError()">&times;</button>
+</div>
+
+<div class="alert alert-success" id="msg">
+    <strong>{{ msg }}</strong>
+    <button type="button" class="close" data-hide="alert" (click)="closeMsg()">&times;</button>
+</div>
+<div class="col">
+      <legend class="col-form-label col-sm-2 pt-0">Choose What Operation You Want To Perform</legend>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="opeartion"  id="create" value="1"  (change)="chooseOperation()">
+          <label class="form-check-label" for="create">
+            Add Employee Detail
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="opeartion"  id="read" value="2" (change)="chooseOperation()">
+          <label class="form-check-label" for="read">
+            Get Employee Detail
+          </label>
+        </div>
+        <div class="form-check disabled">
+          <input class="form-check-input" type="radio" name="opeartion"   id="update" value="3" (change)="chooseOperation()">
+          <label class="form-check-label" for="update">
+            Update Employee Detail
+          </label>
+        </div>
+        <div class="form-check disabled">
+          <input class="form-check-input" type="radio" name="opeartion"   id="delete" value="4" (change)="chooseOperation()"(change)="chooseOperation()">
+          <label class="form-check-label" for="delete">
+            Delete Employee Detail
+          </label>
+        </div>
+      </div>
+</div>
+
+<!--***************  add Operation start here  ******************** -->
+<div *ngIf="add">
+      <div class="container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="one" value="option1" (change)="checkOption()">
+              <label class="form-check-label" for="one">Add One Employee at a Time</label>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="two" value="option2" (change)="checkOption()">
+              <label class="form-check-label" for="two">Add Multiple Employee At A time</label>
+            </div>
+      </div>
+              <br><br>
+
+      <div class="container" *ngIf="one">
+        <div class="row">
+          <div class="col">
+            <input type="text" class="form-control" id="oneEmp" placeholder="Employee  name">
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" id="oneCardNum" placeholder="Card Number">
+          </div>
+        </div>
+        <br>
+      <button type="button" class="btn btn-secondary" (click)="addSingleData()">Save Data</button>
+      </div>
+
+
+      <div class="container" *ngIf="two">
+           <label class="form-check-label" >How many Employe You want to add at a time</label>
+            <select  (change)="buildHtml(opt)" #opt>
+              <option value=" "></option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+      <br>
+          <div id="build">
+
+          </div>
+      </div>
+</div>
+
+<!--***************************** Update Operation Start Here *******************-->
+<div *ngIf="upd">
+      <div class="container">
+           <div class="container" >
+             <label>Card Number</label>
+             <input type="text" class="form-control" [(ngModel)]="emp.CardNum" placeholder="Card Number" (change)="getName()">
+            <br>
+            <input type="text" class="form-control" [(ngModel)]="emp.EmpName" placeholder="Current  name" disabled>
+            <br>
+            <input type="text" class="form-control" id="newName" placeholder="New name" >
+            <br>
+            <button type="button" class="btn btn-secondary" (click)="updateName()">Update New Information</button>
+           </div>
+      </div>
+</div>
+
+<!--********************************* Get Operation Start Here *************************-->
+<div *ngIf="get">
+    <div class="container">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="getOp1" value="option1" (change)="getOperation()">
+              <label class="form-check-label" for="getOp1">Get Card Number By Name</label>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="getOp2" value="option2" (change)="getOperation()">
+              <label class="form-check-label" for="getOp2">Get Name By Card Number</label>
+            </div>
+      </div>
+              <br><br>
+    <div class="container" *ngIf="getByName">
+            <input type="text" class="form-control" [(ngModel)]="emp.EmpName" placeholder="Employee  name">
+            <br>
+            <input type="text" class="form-control" [(ngModel)]="emp.CardNum" placeholder="Card Number" disabled>
+            <br>
+            <button type="button" class="btn btn-secondary" (click)="getDetail()">Get Card Number</button>
+     </div>
+
+  <div class="container" *ngIf="getByCard">
+           <input type="text" class="form-control" [(ngModel)]="emp.CardNum" placeholder="Card Number">
+            <br>
+            <input type="text" class="form-control" [(ngModel)]="emp.EmpName" placeholder="Employee  name" disabled>
+            <br>
+            <button type="button" class="btn btn-secondary" (click)="getDetail()">Get Card Number</button>
+     </div>
+</div>
+
+
+<!--********************************** Delete Operation Start here *****************************-->
+<div *ngIf="del">
+    <div class="container">
+           <div class="container" >
+             <label>Card Number</label>
+             <input type="text" class="form-control" [(ngModel)]="emp.CardNum" placeholder="Card Number" (change)="getName()">
+            <br>
+            <input type="text" class="form-control" [(ngModel)]="emp.EmpName" placeholder="Current  name" disabled>
+            <br>
+             <input type="checkbox" id="sure"> &nbsp;&nbsp;&nbsp;&nbsp;<label for="sure"> Are you Sure to Delete this information ?</label>
+             <br>
+            <button type="button" class="btn btn-danger" (click)="deleteEmp()">Delete Information</button>
+           </div>
+      </div>
+</div>
+
